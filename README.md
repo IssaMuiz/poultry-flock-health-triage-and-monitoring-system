@@ -99,7 +99,7 @@ Deliverables:
 
 Objectives:
 
-- Visualize sample images.
+- Visualize and analyze sample images.
 - Understand image characteristics.
 - Analyze image dimensions.
 - Explore image quality.
@@ -111,8 +111,9 @@ Deliverables:
 - Visualizations
 - Findings Report
 
+### Phase 3 - Image Statistics
 
-### Phase 3 — Image Preprocessing
+### Phase 4 — Image Preprocessing
 
 Objectives:
 
@@ -126,7 +127,7 @@ Deliverables:
 - Data preprocessing pipeline.
 
 
-### Phase 4 — CNN Development
+### Phase 5 — CNN Development
 
 Objectives:
 
@@ -147,7 +148,7 @@ Deliverables:
 - Baseline CNN Model
 
 
-### Phase 5 — Model Improvement
+### Phase 6 — Model Improvement
 
 Objectives:
 
@@ -163,7 +164,7 @@ Deliverables:
 - Model comparison report
 
 
-### Phase 6 — Model Evaluation
+### Phase 7 — Model Evaluation
 
 Evaluation metrics:
 
@@ -176,7 +177,7 @@ Evaluation metrics:
 - Error Analysis
 
 
-### Phase 7 — Inference Pipeline
+### Phase 8 — Inference Pipeline
 
 Objectives:
 
@@ -190,7 +191,7 @@ Deliverables:
 - Reusable inference module
 
 
-### Phase 8 — Poultry Flock Health Triage MVP
+### Phase 9 — Poultry Flock Health Triage MVP
 
 Features:
 
@@ -202,7 +203,7 @@ Features:
 - Downloadable case report
 
 
-### Phase 9 — Documentation
+### Phase 10 — Documentation
 
 Final project documentation including:
 
@@ -253,17 +254,9 @@ The dataset consists of images of poultry droppings categorized into Healthy and
 The dataset is used solely for educational and research purposes.
 
 
-## Current Progress
+## Observation and Decision
 
-### Image Resize Strategy
-
-**Decision**
-
-* No resizing will be performed during preprocessing.
-
-**Reason**
-
-* The audit confirmed that all images already have a uniform resolution of 100×100 pixels.
+* No resizing will be performed during preprocessing because the audit reports confirmed that all images already have a uniform resolution of 100×100 pixels.
 
 * Resizing again would provide no benefit and could introduce interpolation artifacts.
 
@@ -273,7 +266,9 @@ Dataset Summary	✅
 Corrupt Images	✅ None Found
 Image Dimensions	✅ Uniform (100×100)
 
-Everything is looking healthy.
+* Everything is looking healthy.
+
+* The dataset uses a single image format (JPEG), so no format conversion is required during preprocessing.
 
 ## Author
 

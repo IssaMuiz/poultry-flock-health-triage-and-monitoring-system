@@ -5,6 +5,7 @@ from src.data.audit import (
     get_dataset_summary,
     find_corrupt_images,
     analyze_image_dimensions,
+    analyze_image_statistics,
 )
 
 DATASET_PATH = Path(
@@ -72,6 +73,21 @@ print("\n", "Top 10 most common image size")
 size_count = dimension_df[["width", "height"]].value_counts().head(10)
 
 print(size_count)
+
+
+# Save the image statistics and the rgb_pixels to the reports path
+image_stats_df, rgb_stats_df = analyze_image_statistics(DATASET_PATH)
+
+image_stats_df.to_csv(REPORT_DIR / "image_statistics.csv", index=False)
+rgb_stats_df.to_csv(REPORT_DIR / "rgb_pixels.csv", index=False)
+
+print("\n" + "=" * 60)
+print("IMAGE STATISTICS REPORT")
+print("=" * 60)
+
+print(f"Format: {image_stats_df['format'].value_counts()}")
+print(f"Mode: {image_stats_df['mode'].value_counts()}")
+print(f"Average RGB Value {rgb_stats_df.mean().round(2)}")
 
 if __name__ == "__main__":
     main()

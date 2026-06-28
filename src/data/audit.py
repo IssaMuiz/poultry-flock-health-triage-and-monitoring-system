@@ -2,6 +2,7 @@ from pathlib import Path
 from PIL import Image
 from tqdm import tqdm
 import pandas as pd
+import numpy as np
 from collections import Counter
 
 # Supported image formats
@@ -181,3 +182,64 @@ def analyze_image_dimensions(data_root: Path) -> pd.DataFrame:
             except Exception:
                 continue
     return pd.DataFrame(image_info)
+
+
+def analyze_image_statistics(data_root: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Analyze image formats, color modes and RGB statistics.
+
+    Parameters
+    ----------
+    data_root : Path
+        Dataset root directory.
+
+    Returns
+    -------
+    tuple[pd.DataFrame, pd.DataFrame]
+        Image statistics and RGB statistics.
+    """
+
+    image_statistics = []
+    rgb_pixels = []
+
+    class_folders = [
+        folder
+        for folder in data_root.iterdir()
+        if folder.is_dir and not folder.name.startswith(".")
+    ]
+
+    for class_folder in class_folders:
+        image_files = [
+            file
+            for file in class_folder.iterdir()
+            if file.is_file() and file.suffix.lower() in SUPPORTED_EXTENSIONS
+        ]
+
+        for image_path in tqdm(image_files, desc=f"Statistics : {class_folder.name}"):
+            try:
+                with Image.open(image_path) as img:
+
+                    image_statistics.append(
+                        {
+                            "class": class_folder.name,
+                            "format": img.format,
+                            "mode": img.mode,
+                        }
+                    )
+
+                    if img.mode == "RGB":
+                        image = np.array(img)
+
+                        rgb_pixels.append(
+                            {
+                                "red_mean": image[:, :, 0].mean(),
+                                "green_mean": image[:, :, 1].mean(),
+                                "blue_mean": image[:, :, 2].mean(),
+                            }
+                        )
+            except Exception:
+                continue
+
+    image_statistics_df = pd.DataFrame(image_statistics)
+    rgb_pixels_df = pd.DataFrame(rgb_pixels)
+    return image_statistics_df, rgb_pixels_df
