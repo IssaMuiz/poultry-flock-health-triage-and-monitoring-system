@@ -1,7 +1,10 @@
 from pathlib import Path
 import json
 
-from src.data.audit import get_dataset_summary
+from src.data.audit import (
+    get_dataset_summary,
+    find_corrupt_images,
+)
 
 DATASET_PATH = Path(
     "data/raw/Poultry Birds Poo Imagery Dataset for Health Status Prediction A Case of South-West Nigeria/Dataset"
@@ -34,3 +37,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+REPORT_DIR = Path("artifacts/reports")
+REPORT_DIR.mkdir(parents=True, exist_ok=True)
+
+corrupt_df = find_corrupt_images(DATASET_PATH)
+
+corrupt_df.to_csv(
+    REPORT_DIR / "corrupt_images.csv",
+    index=False,
+)
+
+print("\n" + "=" * 60)
+print("CORRUPT IMAGE REPORT")
+print("=" * 60)
+print(f"Corrupt Images Found : {len(corrupt_df)}")
