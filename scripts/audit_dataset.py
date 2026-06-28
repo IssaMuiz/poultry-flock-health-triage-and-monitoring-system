@@ -4,6 +4,7 @@ import json
 from src.data.audit import (
     get_dataset_summary,
     find_corrupt_images,
+    analyze_image_dimensions,
 )
 
 DATASET_PATH = Path(
@@ -35,10 +36,7 @@ def main():
         json.dump(summary, f)
 
 
-if __name__ == "__main__":
-    main()
-
-
+# Save the corrupt image in the report path
 REPORT_DIR = Path("artifacts/reports")
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -53,3 +51,27 @@ print("\n" + "=" * 60)
 print("CORRUPT IMAGE REPORT")
 print("=" * 60)
 print(f"Corrupt Images Found : {len(corrupt_df)}")
+
+
+# Save the image dimension to the reports path
+dimension_df = analyze_image_dimensions(DATASET_PATH)
+
+dimension_df.to_csv(REPORT_DIR / "image_dimension.csv", index=False)
+
+print("\n" + "=" * 60)
+print("IMAGE DIMENSION REPORT")
+print("=" * 60)
+print(f"Image Analyzed: {len(dimension_df)}")
+print(f"Minimum Width: {dimension_df['width'].min()}")
+print(f"Maximum width: {dimension_df['width'].max()}")
+print(f"Minimum height: {dimension_df['height'].min()}")
+print(f"Maximum height: {dimension_df['height'].max()}")
+
+print("\n", "Top 10 most common image size")
+
+size_count = dimension_df[["width", "height"]].value_counts().head(10)
+
+print(size_count)
+
+if __name__ == "__main__":
+    main()

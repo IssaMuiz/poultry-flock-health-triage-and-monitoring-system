@@ -2,6 +2,7 @@ from pathlib import Path
 from PIL import Image
 from tqdm import tqdm
 import pandas as pd
+from collections import Counter
 
 # Supported image formats
 SUPPORTED_EXTENSIONS = {
@@ -129,3 +130,54 @@ def find_corrupt_images(data_root: Path) -> pd.DataFrame:
                 )
 
     return pd.DataFrame(corrupt_images, columns=["class", "image_path", "error"])
+
+
+def analyze_image_dimensions(data_root: Path) -> pd.DataFrame:
+    """
+    Analyze image dimensions in the dataset.
+
+    Parameters
+    ----------
+    data_root : Path
+        Root dataset directory.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing image dimension information.
+    """
+
+    image_info = []
+
+    # save the image folder in a list
+    class_folders = [
+        folder
+        for folder in data_root.iterdir()
+        if folder.is_dir() and not folder.name.startswith(".")
+    ]
+
+    # checking each image file in the image folder
+    for class_folder in class_folders:
+        image_file = [
+            file
+            for file in class_folder.iterdir()
+            if file.is_file() and file.suffix.lower() in SUPPORTED_EXTENSIONS
+        ]
+
+        for image_path in tqdm(image_file, desc=f"Analyzing {class_folder.name}"):
+            try:
+                with Image.open(image_path) as img:
+                    width, height = img.size
+
+                    image_info.append(
+                        {
+                            "class": class_folder.name,
+                            "image_path": str(image_path),
+                            "width": width,
+                            "height": height,
+                            "aspect_ratio": round(width / height, 3),
+                        }
+                    )
+            except Exception:
+                continue
+    return pd.DataFrame(image_info)

@@ -253,6 +253,28 @@ The dataset consists of images of poultry droppings categorized into Healthy and
 The dataset is used solely for educational and research purposes.
 
 
+## Current Progress
+
+### Image Resize Strategy
+
+**Decision**
+
+* No resizing will be performed during preprocessing.
+
+**Reason**
+
+* The audit confirmed that all images already have a uniform resolution of 100×100 pixels.
+
+* Resizing again would provide no benefit and could introduce interpolation artifacts.
+
+Dataset Audit So Far
+Task	Result
+Dataset Summary	✅
+Corrupt Images	✅ None Found
+Image Dimensions	✅ Uniform (100×100)
+
+Everything is looking healthy.
+
 ## Author
 
 This project is being developed as a portfolio project to demonstrate practical skills in Computer Vision, Deep Learning, and Machine Learning Engineering.
