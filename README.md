@@ -253,104 +253,6 @@ The dataset consists of images of poultry droppings categorized into Healthy and
 
 The dataset is used solely for educational and research purposes.
 
-
-## Current Progress
-
-### Dataset Audit Report
-
-The purpose of this audit was to assess the quality, integrity, and readiness of the poultry fecal imagery dataset before any preprocessing or model development.
-
-The audit focused on verifying the dataset structure, detecting potential data quality issues, and understanding the characteristics of the images that will be used for training a Convolutional Neural Network (CNN).
-
-### Audit Summary
-
-#### Dataset Overview
-
-| Metric            |  Value |
-| ----------------- | -----: |
-| Number of Classes |      2 |
-| Total Images      | 14,618 |
-| Healthy Images    |  7,991 |
-| Unhealthy Images  |  6,627 |
-
-#### Observation
-
-The dataset contains two classes (Healthy and Unhealthy) with a reasonably balanced distribution, making it suitable for binary image classification.
-
----
-
-### Corrupt Image Detection
-
-**Images Scanned:** 14,618
-
-**Corrupt Images Found:** 0
-
-#### Observation
-
-All images were successfully opened and validated using the Pillow library. No corrupt or unreadable images were detected.
-
----
-
-### Image Dimension Analysis
-
-| Property     | Value      |
-| ------------ | ---------- |
-| Image Width  | 100 pixels |
-| Image Height | 100 pixels |
-
-#### Observation
-
-Every image has a resolution of **100 × 100 pixels**.
-
-This indicates that the dataset has already been preprocessed to a uniform size.
-
-
-### Image Format Analysis
-
-| Property     | Value |
-| ------------ | ----- |
-| Image Format | JPEG  |
-| Color Mode   | RGB   |
-
-### Observation
-
-The dataset contains a single image format (JPEG) and all images use the RGB color space.
-
-This ensures consistency throughout the preprocessing and training pipeline.
-
----
-
-### Average RGB Intensity
-
-| Channel | Mean Intensity |
-| ------- | -------------: |
-| Red     |         131.86 |
-| Green   |         118.61 |
-| Blue    |         101.14 |
-
-#### Observation
-
-The images exhibit slightly higher red-channel intensity, which is consistent with the natural colors of poultry litter and fecal matter.
-
-No abnormal color distribution was observed.
-
----
-
-### Visual Inspection Findings
-
-Random samples from both classes were manually inspected.
-
-#### Observations
-
-* Healthy and unhealthy images share similar backgrounds.
-* Poultry droppings occupy a relatively small portion of each image.
-* Droppings visually blend with the surrounding litter, making them difficult to distinguish.
-* Healthy droppings generally appear firmer.
-* Unhealthy droppings appear more watery in many samples.
-* No obvious label inconsistencies were observed during manual inspection.
-
----
-
 ### Dataset Strengths
 
 * Large dataset (14,618 images)
@@ -372,25 +274,27 @@ Random samples from both classes were manually inspected.
 
 ---
 
-### Engineering Decisions
 
-Based on the audit, the following decisions were made:
+## Documentation
 
-* No image resizing is required.
-* Images will remain in RGB format.
-* Standard image normalization will be applied during preprocessing.
-* The dataset is suitable for CNN-based binary image classification.
-* More advanced techniques (e.g., object detection or segmentation) may improve performance in future versions by focusing the model on the droppings rather than the background.
+Detailed project documentation is available in the `docs/` directory.
 
----
+* **Data**
 
-### Conclusion
+  * Dataset Audit
+  * Visual Inspection
+  * Data Pipeline
 
-The dataset passed all major quality checks and is considered suitable for the development of the baseline CNN model.
+* **Modeling**
 
-No critical data integrity issues were identified during the audit.
+  * CNN Architecture Design
+  * Training Process *(coming soon)*
+  * Model Evaluation *(coming soon)*
 
-The next phase of the project will focus on building a reproducible data preprocessing pipeline, including dataset splitting, PyTorch Dataset implementation, image transformations, and DataLoader construction.
+* **Deployment**
+
+  * Deployment Guide *(coming soon)*
+
 
 
 ## Author

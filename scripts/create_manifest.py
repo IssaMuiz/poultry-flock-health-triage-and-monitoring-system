@@ -11,7 +11,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 manifest = create_dataset_manifest(DATASET_PATH)
 
-manifest.to_csv(OUTPUT_DIR / "dataset_manifest", index=False)
+manifest.to_csv(OUTPUT_DIR / "dataset_manifest.csv", index=False)
 
 
 print("\n" + "=" * 60)
