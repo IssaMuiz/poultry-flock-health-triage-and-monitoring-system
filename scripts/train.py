@@ -37,6 +37,11 @@ criterion = nn.CrossEntropyLoss()
 # Optimizer
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
+# CHECKPOINT
+MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
+
+best_val_accuracy = 0.0
+
 
 print("=" * 60)
 print("TRAINING STARTED")
@@ -49,10 +54,15 @@ for epoch in range(EPOCHS):
 
     val_loss, val_acc = validate_one_epoch(model, val_loader, criterion, device)
 
-print(
-    f"{epoch+1} / {EPOCHS}",
-    f"Train loss: {train_loss:.4f}",
-    f"Train accuracy: {train_acc:.4f}",
-    f"Val loss: {val_loss:.4f}",
-    f"Val accuracy: {val_acc:.4f}",
-)
+    print(
+        f"{epoch+1} / {EPOCHS}",
+        f"Train loss: {train_loss:.4f}",
+        f"Train accuracy: {train_acc:.4f}",
+        f"Val loss: {val_loss:.4f}",
+        f"Val accuracy: {val_acc:.4f}",
+    )
+
+    if val_acc > best_val_accuracy:
+        best_val_accuracy = val_acc
+        torch.save(model.state_dict(), MODEL_PATH)
+        print(f"Best model saved successfully!  val_acc: {val_acc:.4f}")
