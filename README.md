@@ -288,8 +288,8 @@ Detailed project documentation is available in the `docs/` directory.
 * **Modeling**
 
   * CNN Architecture Design
-  * Training Process *(coming soon)*
-  * Model Evaluation *(coming soon)*
+  * Training Process
+  * Model Evaluation
 
 * **Deployment**
 
