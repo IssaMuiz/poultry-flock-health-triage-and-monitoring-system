@@ -26,7 +26,11 @@ class BaselineCNN(nn.Module):
         )
 
         self.classifier = nn.Sequential(
-            nn.Flatten(), nn.Linear(128 * 12 * 12, 256), nn.ReLU(), nn.Linear(256, 2)
+            nn.Flatten(),
+            nn.Linear(128 * 12 * 12, 256),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(256, 2),
         )
 
     def forward(self, x):
