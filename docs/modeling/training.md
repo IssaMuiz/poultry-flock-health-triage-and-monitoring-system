@@ -111,15 +111,15 @@ The baseline CNN was trained for 10 epochs using the Adam optimizer and CrossEnt
 
 | Metric              |  Value |
 | ------------------- | -----: |
-| Training Loss       | 0.0312 |
-| Training Accuracy   | 99.12% |
-| Validation Loss     | 0.0556 |
-| Validation Accuracy | 98.08% |
+| Training Loss       | 0.1042 |
+| Training Accuracy   | 96.63% |
+| Validation Loss     | 0.0680 |
+| Validation Accuracy | 98.36% |
 
 ### Interpretation
 
 The model achieved high performance on both the training and validation datasets.
 
-The small gap between training and validation accuracy suggests good generalization on the validation set, with no obvious signs of severe overfitting after 10 epochs.
+The small gap between training and validation accuracy suggests good generalization on the validation set, with no obvious signs of severe overfitting or underfitting after 10 epochs.
 
 These results establish a strong baseline for future experiments and comparisons with more advanced architectures.
