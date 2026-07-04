@@ -1,3 +1,4 @@
+import pandas as pd
 from pathlib import Path
 
 import torch
@@ -42,6 +43,13 @@ MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
 
 best_val_accuracy = 0.0
 
+history = {
+    "epoch": [],
+    "train_loss": [],
+    "val_loss": [],
+    "train_accuracy": [],
+    "val_accuracy": [],
+}
 
 print("=" * 60)
 print("TRAINING STARTED")
@@ -62,7 +70,21 @@ for epoch in range(EPOCHS):
         f"Val accuracy: {val_acc:.4f}",
     )
 
+    history["epoch"].append(epoch + 1)
+    history["train_loss"].append(train_loss)
+    history["val_loss"].append(val_loss)
+    history["train_accuracy"].append(train_acc)
+    history["val_accuracy"].append(val_acc)
+
     if val_acc > best_val_accuracy:
         best_val_accuracy = val_acc
         torch.save(model.state_dict(), MODEL_PATH)
         print(f"Best model saved successfully!  val_acc: {val_acc:.4f}")
+
+
+HISTORY_PATH = Path("")
+history_df = pd.DataFrame(history)
+
+history_df.to_csv("artifacts/history/training_history.csv", index=False)
+
+print("Training history saved successfully!")
