@@ -11,6 +11,7 @@ def create_dataloader(
     test_csv: Path,
     batch_size: int = 32,
     num_workers: int = 0,
+    return_paths=False,
 ):
     """
     Create train, validation and test DataLoaders.
@@ -20,7 +21,9 @@ def create_dataloader(
 
     val_dataset = PoultryDataset(csv_file=val_csv, transform=validation_transform)
 
-    test_dataset = PoultryDataset(csv_file=test_csv, transform=validation_transform)
+    test_dataset = PoultryDataset(
+        csv_file=test_csv, transform=validation_transform, return_paths=return_paths
+    )
 
     train_loader = DataLoader(
         train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers

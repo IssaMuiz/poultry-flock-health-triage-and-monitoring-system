@@ -13,11 +13,7 @@ MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-_, _, test_loader = create_dataloader(
-    TRAIN,
-    VAL,
-    TEST,
-)
+_, _, test_loader = create_dataloader(TRAIN, VAL, TEST, return_paths=True)
 
 model = BaselineCNN()
 model.load_state_dict(torch.load(MODEL_PATH, weights_only=True, map_location=device))

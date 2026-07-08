@@ -9,7 +9,7 @@ class PoultryDataset(Dataset):
     Custom PyTorch Dataset for poultry disease classification.
     """
 
-    def __init__(self, csv_file: Path, transform=None):
+    def __init__(self, csv_file: Path, transform=None, return_paths=False):
         """
         Parameters
         ----------
@@ -21,6 +21,7 @@ class PoultryDataset(Dataset):
         """
         self.data = pd.read_csv(csv_file)
         self.transform = transform
+        self.return_paths = return_paths
 
     def __len__(self):
         return len(self.data)
@@ -34,5 +35,8 @@ class PoultryDataset(Dataset):
 
         if self.transform:
             image = self.transform(image)
+
+        if self.return_paths:
+            return image, label, row["image_path"]
 
         return image, label
