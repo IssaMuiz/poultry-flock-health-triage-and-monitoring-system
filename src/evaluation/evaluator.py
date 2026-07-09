@@ -10,7 +10,11 @@ def evaluate(model, dataloader, device):
 
     model.eval()
 
-    for images, labels in dataloader:
+    for (
+        images,
+        labels,
+        image_path,
+    ) in dataloader:
 
         images = images.to(device)
 

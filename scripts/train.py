@@ -39,7 +39,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 # CHECKPOINT
-MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
+MODEL_PATH = Path("artifacts/augmentation/best_model.pth")
 
 best_val_accuracy = 0.0
 
@@ -85,6 +85,6 @@ for epoch in range(EPOCHS):
 HISTORY_PATH = Path("")
 history_df = pd.DataFrame(history)
 
-history_df.to_csv("artifacts/history/training_history.csv", index=False)
+history_df.to_csv("artifacts/augmentation/training_history.csv", index=False)
 
 print("Training history saved successfully!")

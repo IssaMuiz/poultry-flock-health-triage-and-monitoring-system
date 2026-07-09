@@ -197,12 +197,3 @@ Completed:
 * Model Training
 * Model Checkpointing
 * Model Evaluation
-
-Upcoming:
-
-* Learning Curve Visualization
-* Misclassified Image Analysis
-* Model Error Analysis
-* Model Improvement
-* Inference Pipeline
-* Deployment Preparation

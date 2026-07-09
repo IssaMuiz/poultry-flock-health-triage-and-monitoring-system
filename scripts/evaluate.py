@@ -9,7 +9,7 @@ TRAIN = Path("data/processed/train_df.csv")
 VAL = Path("data/processed/val_df.csv")
 TEST = Path("data/processed/test_df.csv")
 
-MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
+MODEL_PATH = Path("artifacts/models/augmentation/best_model.pth")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

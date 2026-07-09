@@ -11,7 +11,7 @@ from src.explainability.gradcam import GradCAM
 from src.models.cnn import BaselineCNN
 from src.data.dataset import PoultryDataset
 
-MODEL_PATH = Path("artifacts/models/baseline_cnn.pth")
+MODEL_PATH = Path("artifacts/models/augmentation/best_model.pth")
 
 model = BaselineCNN()
 
