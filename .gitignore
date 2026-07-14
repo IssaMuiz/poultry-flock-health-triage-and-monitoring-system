@@ -1,7 +1,19 @@
+# Virtual environment
 venv/
+
+# Python cache
 __pycache__/
-*.pyc
-data/raw/*
-data/processed/*
+*.py[cod]
+
+# Model checkpoints
+artifacts/models/**/*.pth
+
+# Raw dataset images
+data/raw/
+
+# Jupyter
 .ipynb_checkpoints/
-.env
+
+# Operating system files
+.DS_Store
+Thumbs.db

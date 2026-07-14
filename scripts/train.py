@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from src.data.dataloader import create_dataloader
-from src.models.cnn import BaselineCNN
+from src.models.resnet18_transfer import ResNet18Transfer
 from src.training.engine import train_one_epoch, validate_one_epoch
 
 # Configuration
@@ -14,7 +14,7 @@ VAL = Path("data/processed/val_df.csv")
 TEST = Path("data/processed/test_df.csv")
 
 BATCH_SIZE = 32
-LEARNING_RATE = 0.001
+LEARNING_RATE = 0.0001
 EPOCHS = 10
 
 # Device
@@ -29,17 +29,19 @@ train_loader, val_loader, test_loader = create_dataloader(
 
 
 # Model
-model = BaselineCNN().to(device)
+model = ResNet18Transfer().to(device)
 
 
 # Loss
 criterion = nn.CrossEntropyLoss()
 
 # Optimizer
-optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+optimizer = optim.Adam(
+    filter(lambda p: p.requires_grad, model.parameters()), lr=LEARNING_RATE
+)
 
 # CHECKPOINT
-MODEL_PATH = Path("artifacts/augmentation/best_model.pth")
+MODEL_PATH = Path("artifacts/models/resnet18/best_model.pth")
 
 best_val_accuracy = 0.0
 
@@ -85,6 +87,6 @@ for epoch in range(EPOCHS):
 HISTORY_PATH = Path("")
 history_df = pd.DataFrame(history)
 
-history_df.to_csv("artifacts/augmentation/training_history.csv", index=False)
+history_df.to_csv("artifacts/models/resnet18/training_history.csv", index=False)
 
 print("Training history saved successfully!")
