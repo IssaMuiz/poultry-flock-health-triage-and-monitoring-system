@@ -1,0 +1,4 @@
+Model,Accuracy,Precision,Recall,F1-score
+Baseline CNN,98.29,98.04,98.19,98.12
+CNN + Data Augmentation,98.63,98.06,98.94,98.5
+Fine-tuned ResNet18,88.03,87.77,85.52,86.63

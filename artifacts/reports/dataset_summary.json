@@ -1,1 +1,13 @@
-{"dataset_path": "C:\\Users\\Lenovo ThinkPad T480\\Desktop\\poultry-flock-health-triage\\data\\raw\\Poultry Birds Poo Imagery Dataset for Health Status Prediction A Case of South-West Nigeria\\Dataset", "num_classes": 2, "class_names": ["Healthy", "Unhealthy"], "class_distribution": {"Healthy": 7991, "Unhealthy": 6627}, "total_images": 14618}
+{
+    "dataset_path": "C:\\Users\\Lenovo ThinkPad T480\\Desktop\\poultry-flock-health-triage\\data\\raw\\Poultry Birds Poo Imagery Dataset for Health Status Prediction A Case of South-West Nigeria\\Dataset",
+    "num_classes": 2,
+    "class_names": [
+        "Healthy",
+        "Unhealthy"
+    ],
+    "class_distribution": {
+        "Healthy": 7991,
+        "Unhealthy": 6627
+    },
+    "total_images": 14618
+}
