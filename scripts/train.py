@@ -13,9 +13,9 @@ TRAIN = Path("data/processed/train_df.csv")
 VAL = Path("data/processed/val_df.csv")
 TEST = Path("data/processed/test_df.csv")
 
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 LEARNING_RATE = 0.0001
-EPOCHS = 10
+EPOCHS = 20
 
 # Device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
