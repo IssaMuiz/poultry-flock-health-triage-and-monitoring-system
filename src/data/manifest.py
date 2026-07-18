@@ -43,9 +43,11 @@ def create_dataset_manifest(data_root: Path) -> pd.DataFrame:
         for image_path in class_folder.iterdir():
 
             if image_path.is_file and image_path.suffix.lower() in SUPPORTED_EXTENSIONS:
+                relative_path = image_path.relative_to(data_root)
+
                 records.append(
                     {
-                        "image_path": str(image_path),
+                        "image_path": str(relative_path).replace("\\", "/"),
                         "class_name": class_name,
                         "label": label_map[class_name],
                     }

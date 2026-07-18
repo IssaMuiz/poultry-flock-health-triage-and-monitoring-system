@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 from PIL import Image
 from torch.utils.data import Dataset
+from src.config import DATA_ROOT
 
 
 class PoultryDataset(Dataset):
@@ -29,7 +30,9 @@ class PoultryDataset(Dataset):
     def __getitem__(self, index):
         row = self.data.iloc[index]
 
-        image = Image.open(row["image_path"]).convert("RGB")
+        image_path = DATA_ROOT / row["image_path"]
+
+        image = Image.open(image_path).convert("RGB")
 
         label = int(row["label"])
 
