@@ -418,8 +418,8 @@ This exposed the model to more diverse image variations while preserving the ori
 #### Data Augmentation Strategy
 
 - Random Horizontal Flip (Probability = 0.5)
-- transforms.RandomRotation(10),
-        transforms.ColorJitter(
+- transforms.RandomRotation(10)
+- transforms.ColorJitter(
             brightness=0.2,
             contrast=0.2,
             saturation=0.2,
