@@ -399,7 +399,7 @@ The extracted feature maps are flattened and passed through fully connected laye
 | Optimizer | Adam |
 | Learning Rate | 0.001 |
 | Loss Function | CrossEntropyLoss |
-| Epochs | 20 |
+| Epochs | 10 |
 | Batch Size | 32 |
 | Input Size | 100 × 100 |
 
@@ -459,7 +459,7 @@ This approach enabled higher-level feature representations to adapt to the domai
 | Learning Rate | 0.0001 |
 | Loss Function | CrossEntropyLoss |
 | Epochs | 20 |
-| Batch Size | 32 |
+| Batch Size | 64 |
 | Input Size | 224 × 224 |
 
 #### Motivation
