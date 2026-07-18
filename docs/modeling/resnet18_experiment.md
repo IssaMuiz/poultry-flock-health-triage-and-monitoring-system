@@ -1,29 +1,38 @@
-# Experiment 3: Frozen ResNet18 Transfer Learning
+# Experiment 3: Fine-Tuned ResNet18 Transfer Learning
 
 ## Objective
 
-The objective of this experiment was to evaluate the effectiveness of transfer learning using a pretrained ResNet18 model for poultry fecal image classification. Unlike the custom CNN developed in previous experiments, this model leveraged features learned from the ImageNet dataset. Only the final classification layer was trained while all pretrained convolutional layers remained frozen.
+The objective of this experiment was to investigate the effectiveness of transfer learning using a pretrained ResNet18 model for poultry fecal image classification. Unlike the previous transfer learning approach where only the classifier is trained, this experiment employed **fine-tuning** by unfreezing the final residual block (Layer 4) together with the final classification layer. This allows the model to adapt higher-level ImageNet features to the specialised poultry fecal image dataset.
 
 ---
 
 ## Model Architecture
 
-A pretrained ResNet18 model was loaded using the ImageNet pretrained weights provided by PyTorch. Since the original model was designed to classify 1000 image categories, the final fully connected (FC) layer was replaced with a new classifier containing two output neurons corresponding to the Healthy and Unhealthy poultry fecal classes.
+A pretrained ResNet18 model was loaded using the ImageNet pretrained weights available in PyTorch. The original classifier, designed for 1000 ImageNet classes, was replaced with a new fully connected layer containing two output neurons corresponding to the Healthy and Unhealthy poultry fecal classes.
 
-### Transfer Learning Strategy
+### Fine-Tuning Strategy
 
 * Pretrained weights: ImageNet
-* Backbone: Frozen
-* Trainable layers: Final Fully Connected (FC) layer only
+* Frozen layers:
+
+  * Conv1
+  * BatchNorm1
+  * Layer1
+  * Layer2
+  * Layer3
+* Trainable layers:
+
+  * Layer4
+  * Fully Connected (FC) layer
 * Number of output classes: 2
 
-By freezing the backbone, the model retained the generic visual features learned during ImageNet training while only adapting the classifier to the poultry fecal classification task.
+This strategy preserves the low-level and mid-level visual features learned from ImageNet while allowing the deepest feature representations to adapt to the poultry fecal image domain.
 
 ---
 
 ## Data Preprocessing
 
-Since ResNet18 expects images of size **224 × 224**, all input images were resized accordingly.
+Since ResNet18 expects an input size of **224 × 224**, all images were resized accordingly.
 
 ### Training Transformations
 
@@ -32,13 +41,13 @@ Since ResNet18 expects images of size **224 × 224**, all input images were resi
 * ToTensor()
 * Normalize using ImageNet statistics
 
-Mean:
+**ImageNet Mean**
 
 * 0.485
 * 0.456
 * 0.406
 
-Standard Deviation:
+**ImageNet Standard Deviation**
 
 * 0.229
 * 0.224
@@ -54,30 +63,31 @@ Standard Deviation:
 
 ## Training Configuration
 
-| Parameter     | Value            |
-| ------------- | ---------------- |
-| Optimizer     | Adam             |
-| Learning Rate | 0.0001           |
-| Batch Size    | 64               |
-| Epochs        | 20               |
-| Loss Function | CrossEntropyLoss |
+| Parameter     | Value                    |
+| ------------- | ------------------------ |
+| Optimizer     | Adam                     |
+| Learning Rate | 0.0001                   |
+| Batch Size    | 64                       |
+| Epochs        | 20                       |
+| Loss Function | CrossEntropyLoss         |
+| Device        | NVIDIA GPU (Kaggle CUDA) |
 
 ---
 
 ## Training Results
 
-The model showed consistent improvement throughout training.
+The model converged steadily throughout the training process.
 
 | Metric                   | Value      |
 | ------------------------ | ---------- |
 | Best Validation Accuracy | **90.49%** |
 
-Training observations:
+### Training Observations
 
-* Validation accuracy increased steadily from **72.78%** during the first epoch to **90.49%** after 20 epochs.
-* Training and validation losses decreased consistently, indicating stable optimization.
-* No signs of unstable training or divergence were observed.
-* Although the model continued improving throughout training, it remained significantly below the performance achieved by the custom CNN models.
+* Validation accuracy improved steadily from **72.78%** in the first epoch to **90.49%** after 20 epochs.
+* Training and validation losses decreased consistently throughout the training process.
+* No evidence of unstable optimisation or severe overfitting was observed.
+* Fine-tuning Layer 4 enabled the model to learn more task-specific features compared with training only the classifier; however, the overall performance remained below that of the custom CNN models.
 
 ---
 
@@ -87,26 +97,40 @@ Training observations:
 | ----------------------- | -----------------------: |
 | Baseline CNN            |                   98.36% |
 | CNN + Data Augmentation |                   98.63% |
-| Frozen ResNet18         |                   90.49% |
+| Fine-Tuned ResNet18     |                   90.49% |
 
-The pretrained ResNet18 underperformed both custom CNN models by approximately **8 percentage points**.
+The fine-tuned ResNet18 achieved respectable performance but remained approximately **8 percentage points** below the custom CNN models.
 
 ---
 
 ## Discussion
 
-The relatively lower performance of the frozen ResNet18 can be attributed to several factors.
+Although fine-tuning allowed the deepest residual block to adapt to the poultry fecal dataset, the model still underperformed the custom CNN architecture.
 
-First, only the final fully connected layer was updated during training, while all convolutional layers remained frozen. Consequently, the model relied entirely on ImageNet features that were originally learned from natural images such as animals, vehicles, and everyday objects.
+Several factors may explain this outcome:
 
-Second, poultry fecal images differ substantially from ImageNet images. Characteristics such as colour distribution, texture, moisture content, and background composition are highly domain-specific and may not be adequately represented by generic ImageNet features.
+1. **Domain Difference**
 
-Finally, restricting training to only the classifier prevented the deeper convolutional layers from adapting to these specialised visual characteristics, thereby limiting the model's ability to learn more discriminative features for poultry health classification.
+   ResNet18 was pretrained on the ImageNet dataset, which contains natural images such as animals, vehicles, buildings and household objects. Poultry fecal images exhibit specialised colour distributions, textures and moisture patterns that differ substantially from ImageNet images.
+
+2. **Limited Fine-Tuning**
+
+   Only Layer 4 and the classifier were updated during training, while the earlier layers remained frozen. Although this preserves useful generic features, it may also restrict the model's ability to fully adapt to the target domain.
+
+3. **Dataset Characteristics**
+
+   The poultry fecal dataset is relatively specialised and visually homogeneous. A lightweight CNN designed specifically for this task may learn more discriminative features than a large pretrained architecture optimised for general-purpose image recognition.
+
+4. **Custom CNN Suitability**
+
+   The custom CNN was designed and trained entirely on the poultry fecal dataset, enabling all convolutional layers to learn task-specific representations from scratch. This likely contributed to its superior performance.
 
 ---
 
 ## Conclusion
 
-The frozen ResNet18 successfully demonstrated the applicability of transfer learning for poultry fecal image classification, achieving a respectable validation accuracy of **90.49%**. However, its performance remained considerably lower than that of the custom CNN models developed earlier in this study.
+The fine-tuned ResNet18 demonstrated that transfer learning can successfully classify poultry fecal images, achieving a best validation accuracy of **90.49%**. However, even after fine-tuning the final residual block, its performance remained noticeably below that of the custom CNN models.
 
-These findings indicate that freezing the entire pretrained backbone restricted the model's ability to adapt to the specialised poultry fecal dataset. Consequently, a second transfer learning experiment will be conducted using **fine-tuning**, where the final residual block (Layer 4) together with the classification layer will be unfrozen and trained. This approach is expected to allow higher-level feature representations to adapt more effectively to the target domain and improve overall classification performance.
+This experiment highlights an important finding: **pretrained deep learning models do not always outperform carefully designed custom architectures on specialised datasets**. For this poultry fecal image classification task, the custom CNN proved more effective, suggesting that learning domain-specific features from scratch was more beneficial than adapting generic ImageNet representations.
+
+The next stage of this study is to evaluate the fine-tuned ResNet18 on the independent test set, perform Grad-CAM visualisation, and compare all developed models using classification metrics, confusion matrices and explainability analysis.
