@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
 
-HISTORY_PATH = Path("artifacts/history/training_history.csv")
+HISTORY_PATH = Path("artifacts/models/resnet18/training_history.csv")
 
-OUTPUT_DIR = Path("artifacts/reports/figures")
+OUTPUT_DIR = Path("artifacts/reports/figures/resnet18")
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
