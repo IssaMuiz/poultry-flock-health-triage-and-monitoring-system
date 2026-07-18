@@ -8,12 +8,15 @@ from PIL import Image
 
 from src.data.transforms import validation_transform
 from src.explainability.gradcam import GradCAM
-from src.models.cnn import BaselineCNN
+from src.models.resnet18_transfer import ResNet18Transfer
 from src.data.dataset import PoultryDataset
+from src.config import DATA_ROOT
 
-MODEL_PATH = Path("artifacts/models/augmentation/best_model.pth")
+MODEL_PATH = Path("artifacts/models/resnet18/resnet18_model.pth")
 
-model = BaselineCNN()
+SAVE_DIR = Path("artifacts/figures/resnet18_learning_chart")
+
+model = ResNet18Transfer()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -23,7 +26,7 @@ model.to(device)
 
 model.eval()
 
-target_layer = model.features[7]
+target_layer = model.model.layer4[-1]
 
 gradcam = GradCAM(model, target_layer)
 
@@ -34,7 +37,9 @@ image_paths = dataset.data["image_path"].iloc[:10].tolist()
 
 def show_gradcam(image_path):
 
-    original = Image.open(image_path).convert("RGB")
+    full_path = DATA_ROOT / image_path
+
+    original = Image.open(full_path).convert("RGB")
 
     input_tensor = validation_transform(original).unsqueeze(0).to(device)
 
@@ -44,7 +49,7 @@ def show_gradcam(image_path):
 
     cam = torch.nn.functional.interpolate(
         cam,
-        size=(100, 100),
+        size=(224, 224),
         mode="bilinear",
         align_corners=False,
     )
@@ -61,7 +66,7 @@ def show_gradcam(image_path):
         cv2.COLOR_BGR2RGB,
     )
 
-    original_np = np.array(original.resize((100, 100)))
+    original_np = np.array(original.resize((224, 224)))
 
     overlay = (0.4 * heatmap + 0.6 * original_np).astype(np.uint8)
 
@@ -86,6 +91,13 @@ for ax, image_path in zip(axes.flatten(), image_paths):
 
     ax.axis("off")
 
+
 plt.tight_layout()
+
+plt.savefig(
+    SAVE_DIR / "gradcam_grid.png",
+    dpi=300,
+    bbox_inches="tight",
+)
 
 plt.show()
