@@ -20,6 +20,9 @@ class ResNet18Transfer(nn.Module):
         # Freeze all pretrained layers
         for parameter in self.model.parameters():
             parameter.requires_grad = False
+        # Unfreeze layer4
+        for parameter in self.model.layer4.parameters():
+            parameter.requires_grad = True
 
         # Unfreeze classifier
         for parameter in self.model.fc.parameters():

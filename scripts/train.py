@@ -14,7 +14,7 @@ VAL = Path("data/processed/val_df.csv")
 TEST = Path("data/processed/test_df.csv")
 
 BATCH_SIZE = 64
-LEARNING_RATE = 0.0001
+LEARNING_RATE = 0.001
 EPOCHS = 20
 
 # Device
