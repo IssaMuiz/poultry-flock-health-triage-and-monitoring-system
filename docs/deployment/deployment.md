@@ -7,7 +7,7 @@ The application is deployed using **Streamlit Community Cloud**, providing an in
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/poultry-flock-health-triage.git
+git clone https://github.com/<IssaMuiz>/poultry-flock-health-triage.git
 cd poultry-flock-health-triage
 ```
 
