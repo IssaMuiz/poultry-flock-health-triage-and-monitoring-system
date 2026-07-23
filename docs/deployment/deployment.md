@@ -60,7 +60,7 @@ The application will open automatically in your default web browser.
 
 The deployed application is available on Streamlit Community Cloud:
 
-**🔗 Live Demo:** *Add your Streamlit URL here after deployment.*
+**🔗 Live Demo:** *(https://poultry-flock-health-triage-and-monitoring-system-dd75nfzend8p.streamlit.app/)*
 
 ---
 
